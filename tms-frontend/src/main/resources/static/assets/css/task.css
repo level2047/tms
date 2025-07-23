@@ -48,5 +48,5 @@
 }
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-  background-color: #e8f4ff
+  background-color: var(--bs-primary-bg-subtle);
 }
