@@ -1,0 +1,47 @@
+services:
+  mongo-express:
+    image: mongo-express
+    networks:
+      - my-net
+    ports:
+      - "9091:8081"
+    depends_on:
+      - mongo
+
+  mongo:
+    hostname: 'mongo'
+    image: mongo:4.4.29
+    ports:
+      - "27017:27017"
+    networks:
+      - my-net
+
+  tms-backend:
+    image: openjdk:17-jdk-slim
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./tms-backend/build/libs:/app
+    entrypoint: ["java", "-jar", "/app/tms-backend-1.0.jar"]
+    depends_on:
+      - mongo
+    networks:
+      - my-net
+
+  tms-frontend:
+    image: openjdk:17-jdk-slim
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./tms-frontend/build/libs:/app
+    entrypoint: [ "java", "-jar", "/app/tms-frontend-1.0.jar" ]
+    depends_on:
+      - tms-backend
+      - mongo
+    networks:
+      - my-net
+
+networks:
+  my-net:
+    driver: bridge
+

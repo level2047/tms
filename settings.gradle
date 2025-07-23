@@ -1,0 +1,4 @@
+rootProject.name = 'task-management-system'
+include 'tms-backend'
+include 'tms-frontend'
+
